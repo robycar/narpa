@@ -1,0 +1,33 @@
+version: '3.1'
+services:
+  # API:
+  #   image: 'narpa-be'
+  #   ports:
+  #     - "8080:8080"
+  #   depends_on:
+  #     narpadb:
+  #       condition: service_healthy
+  #   environment:
+  #     - SPRING_DATASOURCE_URL=jdbc:mysql://narpa:3306/narpa
+  #     - SPRING_DATASOURCE_USERNAME=narpa
+  #     - SPRING_DATASOURCE_PASSWORD=secret
+  #     - SPRING_JPA_HIBERNATE_DDL_AUTO=verify
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 9080:8080
+
+  narpadb:
+    volumes:
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./data/mysql:/var/lib/mysql
+    container_name: db
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      # MYSQL_DATABASE: narpa
