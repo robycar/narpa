@@ -1,6 +1,5 @@
 package it.rotechnology.narpa.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class ProfiloService {
 	public ProfiloDTO getProfiloById(Long id) {
 		return new ProfiloDTO(read(id));
 	}
-	
+
 	public ProfiloDTO creaProfilo(ProfiloDTO profiloDTO) {
 		Profilo profilo = new Profilo();
 		profilo.setId(profiloDTO.getId());
@@ -42,9 +41,10 @@ public class ProfiloService {
 		profilo.setDescrizione(profiloDTO.getDescrizione());
 		return new ProfiloDTO(this.profiloRepository.save(profilo));
 	}
-//	
-//	public ProfiloDTO rimuoviProfilo(ProfiloDTO profiloDTO) {
-//		
-//	}
-	
+
+	public void rimuoviProfilo(Long id) {
+
+		this.profiloRepository.deleteById(id);
+	}
+
 }
