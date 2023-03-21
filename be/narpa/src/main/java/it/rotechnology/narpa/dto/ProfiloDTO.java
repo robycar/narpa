@@ -1,9 +1,13 @@
 package it.rotechnology.narpa.dto;
 
 import it.rotechnology.narpa.model.Profilo;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
+@Getter
+@Setter
 public class ProfiloDTO {
 
 	private Long id;
