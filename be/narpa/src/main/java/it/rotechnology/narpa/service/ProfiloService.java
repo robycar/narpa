@@ -6,13 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.rotechnology.narpa.dto.ProfiloDTO;
+import it.rotechnology.narpa.exception.AppError;
 import it.rotechnology.narpa.model.Profilo;
 import it.rotechnology.narpa.repository.ProfiloRepository;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional
-public class ProfiloService {
+@Slf4j
+public class ProfiloService extends AbstractService {
+	
 	@Autowired
 	private ProfiloRepository profiloRepository;
 
@@ -36,7 +40,7 @@ public class ProfiloService {
 
 	public Profilo read(Long id) {
 		Optional<Profilo> profilo = this.profiloRepository.findById(id);
-		return profilo.get();
+		return profilo.orElseThrow(() -> makeError(log, AppError.PROFILE_NOT_EXISTS, id));
 	}
 
 	public ProfiloDTO getProfiloById(Long id) {
