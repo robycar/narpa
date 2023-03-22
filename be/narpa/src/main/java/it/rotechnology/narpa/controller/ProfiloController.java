@@ -51,6 +51,5 @@ public class ProfiloController {
 	public ResponseEntity<ProfiloDTO> rimuoviProfilo(@PathVariable("id") Long id) {
 		profiloService.rimuoviProfilo(id);
 		return ResponseEntity.ok(null);
-
 	}
 }

@@ -1,13 +1,16 @@
 package it.rotechnology.narpa.dto;
 
-import java.util.List;
 import java.util.Set;
 
 import it.rotechnology.narpa.model.Funzione;
 import it.rotechnology.narpa.model.Utente;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
+@Getter
+@Setter
 public class UtenteDTO {
 
 	private Long id;

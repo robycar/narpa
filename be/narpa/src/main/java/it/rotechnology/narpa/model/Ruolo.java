@@ -2,7 +2,6 @@ package it.rotechnology.narpa.model;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,7 +17,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="RUOLO")
+@Table(name = "RUOLO")
 @Getter
 @Setter
 public class Ruolo implements Serializable {
@@ -28,19 +27,17 @@ public class Ruolo implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID")
+	@Column(name = "ID")
 	private Long id;
-	
-	@Column(name="NOME", length = NOME_LENGTH)
+
+	@Column(name = "NOME", length = NOME_LENGTH)
 	private String nome;
-	
-	@Column(length=DESCRIZIONE_LENGTH)
+
+	@Column(length = DESCRIZIONE_LENGTH)
 	private String descrizione;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "AUTORIZZAZIONE_RUOLO", 
-		joinColumns = @JoinColumn(name = "RUOLO_ID"), 
-		inverseJoinColumns = @JoinColumn(name="FUNZIONE_CODICE"))
+	@JoinTable(name = "AUTORIZZAZIONE_RUOLO", joinColumns = @JoinColumn(name = "RUOLO_ID"), inverseJoinColumns = @JoinColumn(name = "FUNZIONE_CODICE"))
 	private List<Funzione> funzioni;
-	
+
 }

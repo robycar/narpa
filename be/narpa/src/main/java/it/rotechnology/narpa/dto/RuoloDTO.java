@@ -2,9 +2,7 @@ package it.rotechnology.narpa.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import it.rotechnology.narpa.model.Funzione;
 import it.rotechnology.narpa.model.Ruolo;
@@ -34,7 +32,7 @@ public class RuoloDTO implements Serializable { // e poi le funzioni
 		this.id = id;
 	}
 
-	public RuoloDTO(Ruolo r, boolean includeDetails) { //Per i dettagli deve essere sempre true come valore
+	public RuoloDTO(Ruolo r, boolean includeDetails) { // Per i dettagli deve essere sempre true come valore
 
 		this.id = r.getId();
 		this.nome = r.getNome();
@@ -43,14 +41,14 @@ public class RuoloDTO implements Serializable { // e poi le funzioni
 			this.funzioni = new ArrayList<>();
 			if (r.getFunzioni() != null) {
 				for (Funzione funzione : r.getFunzioni()) {
-					//FunzioneDTO funzioneDTO = new FunzioneDTO(funzione);
+					// FunzioneDTO funzioneDTO = new FunzioneDTO(funzione);
 					this.funzioni.add(funzione.getCodice());
 				}
 			}
 		}
 	}
 
-	public RuoloDTO(Ruolo ruolo) { //Questo costruttore non mi prende i dettagli
+	public RuoloDTO(Ruolo ruolo) { // Questo costruttore non mi prende i dettagli
 		this(ruolo, false);
 	}
 

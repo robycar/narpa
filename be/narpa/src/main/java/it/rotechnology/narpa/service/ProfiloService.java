@@ -1,6 +1,5 @@
 package it.rotechnology.narpa.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,6 +44,7 @@ public class ProfiloService extends AbstractService {
 		profilo.setNome(profiloDTO.getNome());
 		profilo.setDescrizione(profiloDTO.getDescrizione());
 		return new ProfiloDTO(profiloRepository.save(profilo));
+		
 
 	}
 
@@ -69,5 +69,6 @@ public class ProfiloService extends AbstractService {
 
 		this.profiloRepository.deleteById(id);
 	}
+	
 
 }
