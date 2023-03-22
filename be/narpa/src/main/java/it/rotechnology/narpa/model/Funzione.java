@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Funzione implements Serializable {
-	private static final long serialVersionUID = 5007412515989779738L;
+	private static final long serialVersionUID = 5007412515989779738L; 
 	@Id 
 	private String codice;
 	private String descrizione;

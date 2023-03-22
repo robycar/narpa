@@ -1,6 +1,7 @@
 package it.rotechnology.narpa.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -40,6 +41,6 @@ public class Ruolo implements Serializable {
 	@JoinTable(name = "AUTORIZZAZIONE_RUOLO", 
 		joinColumns = @JoinColumn(name = "RUOLO_ID"), 
 		inverseJoinColumns = @JoinColumn(name="FUNZIONE_CODICE"))
-	private Set<Funzione> funzioni;
+	private List<Funzione> funzioni;
 	
 }
