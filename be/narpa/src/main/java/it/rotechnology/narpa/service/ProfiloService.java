@@ -24,6 +24,15 @@ public class ProfiloService {
 //		List<Profilo> result = List < Profilo > profiloRepository.findAll();
 //		return result;
 //	}
+	
+	public ProfiloDTO modificaProfilo(ProfiloDTO profiloDTO) {
+		Profilo profilo = read(profiloDTO.getId());
+		profilo.setId(profiloDTO.getId());
+		profilo.setNome(profiloDTO.getNome());
+		profilo.setDescrizione(profiloDTO.getDescrizione());
+		return new ProfiloDTO(profiloRepository.save(profilo));
+		
+	}
 
 	public Profilo read(Long id) {
 		Optional<Profilo> profilo = this.profiloRepository.findById(id);

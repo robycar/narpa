@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.rotechnology.narpa.dto.ProfiloDTO;
+import it.rotechnology.narpa.model.Profilo;
 import it.rotechnology.narpa.service.ProfiloService;
 
 @RestController
@@ -30,6 +31,13 @@ public class ProfiloController {
 	public ResponseEntity<ProfiloDTO> aggiungiProfilo(@RequestBody ProfiloDTO profiloDTO) {
 		ProfiloDTO profilo = profiloService.creaProfilo(profiloDTO);
 		return ResponseEntity.status(HttpStatus.CREATED).body(profilo);
+	}
+	
+	@GetMapping("")
+	public ResponseEntity<ProfiloDTO> modificaProfilo(@RequestBody ProfiloDTO profiloDTO){
+		ProfiloDTO profilo = profiloService.modificaProfilo(profiloDTO);
+		return ResponseEntity.ok(profilo);
+		
 	}
 
 	@DeleteMapping("{id}")
