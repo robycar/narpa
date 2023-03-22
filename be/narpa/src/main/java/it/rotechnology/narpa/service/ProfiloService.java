@@ -58,6 +58,11 @@ public class ProfiloService extends AbstractService {
 	}
 
 	public ProfiloDTO creaProfilo(ProfiloDTO profiloDTO) {
+		
+		Optional<Profilo> profiloTramiteNome = profiloRepository.findByNome(profiloDTO.getNome());
+		if(profiloTramiteNome.isPresent()) {
+			throw  makeError(log, AppError.PROFILE_ALREADY_EXISTS, profiloDTO.getNome(),profiloTramiteNome.get().getId() );				
+		}
 		Profilo profilo = new Profilo();
 		profilo.setId(profiloDTO.getId());
 		profilo.setNome(profiloDTO.getNome());

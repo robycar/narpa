@@ -5,11 +5,18 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import it.rotechnology.narpa.dto.UtenteDTO;
+import it.rotechnology.narpa.exception.AppError;
 import it.rotechnology.narpa.model.Utente;
 import it.rotechnology.narpa.repository.UtenteRepository;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@Service
+@Transactional
 public class UtenteService extends AbstractService {
 
 	@Autowired
@@ -37,7 +44,7 @@ public class UtenteService extends AbstractService {
 
 	public Utente read(Long id) {
 		Optional<Utente> utente = this.utenteRepository.findById(id);
-		return utente.orElseThrow(); // TODO: aggiungere l'implementazione AbstractService
+		return utente.orElseThrow(() ->  makeError(log, AppError.USER_NOT_EXISTS, id)); // TODO: aggiungere l'implementazione AbstractService
 	}
 
 	public UtenteDTO creaUtente(UtenteDTO utenteDTO) {

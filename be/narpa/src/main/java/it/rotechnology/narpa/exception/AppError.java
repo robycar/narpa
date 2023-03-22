@@ -6,8 +6,9 @@ import org.springframework.http.HttpStatusCode;
 public enum AppError {
 
 	PROFILE_NOT_EXISTS(HttpStatus.NOT_FOUND),
-	
-	ROLE_NOT_EXISTS(HttpStatus.NOT_FOUND)
+	ROLE_NOT_EXISTS(HttpStatus.NOT_FOUND),
+	USER_NOT_EXISTS(HttpStatus.NOT_FOUND),
+	PROFILE_ALREADY_EXISTS(HttpStatus.BAD_REQUEST),
 	;
 	
 	private final HttpStatusCode defaultStatusCode;
