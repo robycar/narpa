@@ -1,6 +1,9 @@
 package it.rotechnology.narpa.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,18 +27,25 @@ public class ProfiloService extends AbstractService {
 		profiloRepository.save(p);
 	}
 
-//	public List<Profilo> getAll() {
-//		List<Profilo> result = List < Profilo > profiloRepository.findAll();
-//		return result;
-//	}
+	public List<ProfiloDTO> getAll() {
 	
+		List<Profilo> lista = profiloRepository.findAll();
+		return lista.stream().map(ProfiloDTO::new).collect(Collectors.toList()); 
+//		Equivale a scrivere:
+//		List<ProfiloDTO> result = new ArrayList<>();
+//		for (Profilo profilo : lista) {
+//			result.add(new ProfiloDTO(profilo)); 
+//		}
+//		return result;
+	}
+
 	public ProfiloDTO modificaProfilo(ProfiloDTO profiloDTO) {
 		Profilo profilo = read(profiloDTO.getId());
 		profilo.setId(profiloDTO.getId());
 		profilo.setNome(profiloDTO.getNome());
 		profilo.setDescrizione(profiloDTO.getDescrizione());
 		return new ProfiloDTO(profiloRepository.save(profilo));
-		
+
 	}
 
 	public Profilo read(Long id) {
