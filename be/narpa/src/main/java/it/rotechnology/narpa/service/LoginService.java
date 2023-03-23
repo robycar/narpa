@@ -17,15 +17,14 @@ public class LoginService {
 
 
     public UtenteDTO findByUsername(String username){
-
         Utente utente = utenteRepository.findByUsername(username);
-
         UtenteDTO utenteDto = new UtenteDTO();
-
+        utenteDto.setId(utente.getId());
         utenteDto.setUsername(utente.getUsername());
         utenteDto.setPassword(utente.getPassword());
         return utenteDto;
     }
+
 
     public Boolean existsByUsername(String username){
         if(!utenteRepository.existsByUsername(username)){
