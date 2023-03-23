@@ -7,7 +7,7 @@ SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 SET NAMES utf8mb4;
 
--- CREATE USER 'narpa'@'%' IDENTIFIED BY 'narpa';
+CREATE USER 'narpa'@'%' IDENTIFIED BY 'narpa';
 
 CREATE DATABASE `narpa` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `narpa`;
