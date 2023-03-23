@@ -40,12 +40,16 @@ public class ProfiloService extends AbstractService {
 
 	public ProfiloDTO modificaProfilo(ProfiloDTO profiloDTO) {
 		Profilo profilo = read(profiloDTO.getId());
-		profilo.setId(profiloDTO.getId());
-		profilo.setNome(profiloDTO.getNome());
-		profilo.setDescrizione(profiloDTO.getDescrizione());
-		return new ProfiloDTO(profiloRepository.save(profilo));
-		
+		if (!profilo.getNome().equals(profiloDTO.getNome())) {
 
+			Optional<Profilo> altroProfilo = profiloRepository.findByNome(profiloDTO.getNome());
+			if (altroProfilo.isPresent()) {
+				throw makeError(log, AppError.PROFILE_ALREADY_EXISTS, profiloDTO.getNome(), altroProfilo.get().getId());
+			}
+			profilo.setNome(profiloDTO.getNome());
+		}
+		profilo.setDescrizione(profiloDTO.getDescrizione());
+		return new ProfiloDTO(profiloRepository.saveAndFlush(profilo));
 	}
 
 	public Profilo read(Long id) {
@@ -73,7 +77,5 @@ public class ProfiloService extends AbstractService {
 	public void rimuoviProfilo(Long id) {
 
 		this.profiloRepository.deleteById(id);
-	}
-	
-
+	}	
 }
