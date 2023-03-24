@@ -55,7 +55,6 @@ public class ProfiloService extends AbstractService {
 			profilo.setNome(profiloDTO.getNome());
 		}
 		profilo.setDescrizione(profiloDTO.getDescrizione());
-		
 		List<Ruolo>ruoli = ruoloService.readRuoli(profiloDTO.getRuoli().stream().map(RuoloDTO::getId).collect(Collectors.toList()));
 		profilo.setRuoli(ruoli);
 		return new ProfiloDTO(profiloRepository.saveAndFlush(profilo),true);

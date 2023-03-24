@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Transactional
 @Slf4j
-public class RuoloService extends AbstractService{
+public class RuoloService extends AbstractService {
 
 	@Autowired
 	private RuoloRepository ruoloRepository;
@@ -84,7 +84,7 @@ public class RuoloService extends AbstractService{
 		if (ruoli.isEmpty()) {
 			return result;
 		} else {
-			throw makeError(log,AppError.ROLE_NOT_EXISTS,ruoli);
+			throw makeError(log, AppError.ROLE_NOT_EXISTS, ruoli);
 		}
 	}
 
