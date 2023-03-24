@@ -1,5 +1,6 @@
 package it.rotechnology.narpa.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -8,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.rotechnology.narpa.dto.ProfiloDTO;
+import it.rotechnology.narpa.dto.RuoloDTO;
 import it.rotechnology.narpa.exception.AppError;
 import it.rotechnology.narpa.model.Profilo;
+import it.rotechnology.narpa.model.Ruolo;
 import it.rotechnology.narpa.repository.ProfiloRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +24,9 @@ public class ProfiloService extends AbstractService {
 	
 	@Autowired
 	private ProfiloRepository profiloRepository;
+	
+	@Autowired
+	private RuoloService ruoloService;
 
 	public void salvaProfilo(Profilo p) {
 		profiloRepository.save(p);
@@ -40,7 +46,7 @@ public class ProfiloService extends AbstractService {
 
 	public ProfiloDTO modificaProfilo(ProfiloDTO profiloDTO) {
 		Profilo profilo = read(profiloDTO.getId());
-		if (!profilo.getNome().equals(profiloDTO.getNome())) {
+		if (!profilo.getNome().equalsIgnoreCase(profiloDTO.getNome())) {
 
 			Optional<Profilo> altroProfilo = profiloRepository.findByNome(profiloDTO.getNome());
 			if (altroProfilo.isPresent()) {
@@ -49,7 +55,10 @@ public class ProfiloService extends AbstractService {
 			profilo.setNome(profiloDTO.getNome());
 		}
 		profilo.setDescrizione(profiloDTO.getDescrizione());
-		return new ProfiloDTO(profiloRepository.saveAndFlush(profilo));
+		
+		List<Ruolo>ruoli = ruoloService.readRuoli(profiloDTO.getRuoli().stream().map(RuoloDTO::getId).collect(Collectors.toList()));
+		profilo.setRuoli(ruoli);
+		return new ProfiloDTO(profiloRepository.saveAndFlush(profilo),true);
 	}
 
 	public Profilo read(Long id) {
@@ -58,7 +67,7 @@ public class ProfiloService extends AbstractService {
 	}
 
 	public ProfiloDTO getProfiloById(Long id) {
-		return new ProfiloDTO(read(id));
+		return new ProfiloDTO(read(id),true);
 	}
 
 	public ProfiloDTO creaProfilo(ProfiloDTO profiloDTO) {
@@ -71,7 +80,13 @@ public class ProfiloService extends AbstractService {
 		profilo.setId(profiloDTO.getId());
 		profilo.setNome(profiloDTO.getNome());
 		profilo.setDescrizione(profiloDTO.getDescrizione());
-		return new ProfiloDTO(this.profiloRepository.save(profilo));
+		List<Ruolo> ruoli = new ArrayList<>();
+		for (RuoloDTO ruoloDTO : profiloDTO.getRuoli()) {
+			Ruolo ruolo = ruoloService.readRuolo(ruoloDTO.getId());
+			ruoli.add(ruolo);
+		}
+		profilo.setRuoli(ruoli);
+		return new ProfiloDTO(this.profiloRepository.save(profilo),true);
 	}
 
 	public void rimuoviProfilo(Long id) {

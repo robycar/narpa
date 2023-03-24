@@ -1,23 +1,28 @@
 package it.rotechnology.narpa.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.rotechnology.narpa.dto.RuoloDTO;
+import it.rotechnology.narpa.exception.AppError;
 import it.rotechnology.narpa.model.Funzione;
 import it.rotechnology.narpa.model.Ruolo;
 import it.rotechnology.narpa.repository.FunzioneRepository;
 import it.rotechnology.narpa.repository.RuoloRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional
-public class RuoloService {
+@Slf4j
+public class RuoloService extends AbstractService{
 
 	@Autowired
 	private RuoloRepository ruoloRepository;
@@ -66,6 +71,21 @@ public class RuoloService {
 		Optional<Ruolo> result = ruoloRepository.findById(id);
 
 		return result.orElseThrow(() -> new EntityNotFoundException("Ruolo non presente nel database" + id));
+	}
+
+	public List<Ruolo> readRuoli(List<Long> ids) {
+
+		Set<Long> ruoli = new HashSet<>(ids);
+		List<Ruolo> result = ruoloRepository.findAllById(ruoli);
+
+		for (Ruolo ruolo : result) {
+			ruoli.remove(ruolo.getId());
+		}
+		if (ruoli.isEmpty()) {
+			return result;
+		} else {
+			throw makeError(log,AppError.ROLE_NOT_EXISTS,ruoli);
+		}
 	}
 
 	public RuoloDTO updateRuolo(RuoloDTO dto) {
