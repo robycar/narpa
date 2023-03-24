@@ -40,7 +40,7 @@ public class Profilo implements Serializable {
 	private String descrizione;
 	
 	@ManyToMany
-	@JoinTable(name = "ruolo_profilo", joinColumns = @JoinColumn(name = "PROFILO_ID"), inverseJoinColumns = @JoinColumn(name = "RUOLO_ID"))
+	@JoinTable(name = "RUOLO_PROFILO", joinColumns = @JoinColumn(name = "PROFILO_ID"), inverseJoinColumns = @JoinColumn(name = "RUOLO_ID"))
 	private List<Ruolo> ruoli;
 
 }
