@@ -61,4 +61,8 @@ public class Utente  implements Serializable {
 		joinColumns = @JoinColumn(name="UTENTE_ID"),
 		inverseJoinColumns = @JoinColumn(name="FUNZIONE_CODICE"))
 	private Set<Funzione> funzioni;
+
+    public boolean isPresent() {
+        return false;
+    }
 }

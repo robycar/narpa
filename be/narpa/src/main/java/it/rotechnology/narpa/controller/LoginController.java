@@ -23,7 +23,7 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @PostMapping("api/login")
+    @PostMapping("api/auth/login")
     public ResponseEntity<?> retrieveUserData(@Valid @RequestParam(name = "username") String username, @RequestParam(name = "password") String password){
         
         if(loginService.existsByUsername(username)){

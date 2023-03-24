@@ -9,6 +9,7 @@ public enum AppError {
 	ROLE_NOT_EXISTS(HttpStatus.NOT_FOUND),
 	USER_NOT_EXISTS(HttpStatus.NOT_FOUND),
 	PROFILE_ALREADY_EXISTS(HttpStatus.BAD_REQUEST),
+	USER_ALREADY_EXISTS(HttpStatus.BAD_REQUEST),
 	;
 	
 	private final HttpStatusCode defaultStatusCode;

@@ -30,27 +30,27 @@ public class UtenteController {
 		return ResponseEntity.ok(utente);
 	}
 
-	@GetMapping("")
+	@GetMapping("/all")
 	public ResponseEntity<List<UtenteDTO>> listaProfili() {
-		List<UtenteDTO> lista = utenteService.getAll();
+		List<UtenteDTO> lista = utenteService.getAllUtenti();
 		return ResponseEntity.ok(lista);
 	}
 
-	@PutMapping
+	@PutMapping("/add")
 	public ResponseEntity<UtenteDTO> aggiungiUtente(@RequestBody UtenteDTO utenteDTO) {
 		UtenteDTO utente = utenteService.creaUtente(utenteDTO);
 		return ResponseEntity.status(HttpStatus.CREATED).body(utente);
 	}
 
-	@DeleteMapping("{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<UtenteDTO> rimuoviUtente(@PathVariable("id") Long id) {
 		utenteService.rimuoviUente(id);
 		return ResponseEntity.ok(null);
 	}
 
-	@PostMapping
+	@PostMapping("/update")
 	public ResponseEntity<UtenteDTO> modificaUtente(@RequestBody UtenteDTO utenteDTO) {
-		UtenteDTO utente = utenteService.modificaUtente(utenteDTO);
+		UtenteDTO utente = utenteService.modificaInfoUtente(utenteDTO);
 		return ResponseEntity.ok(utente);
 	}
 

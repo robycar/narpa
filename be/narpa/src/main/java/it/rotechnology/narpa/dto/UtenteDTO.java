@@ -3,6 +3,7 @@ package it.rotechnology.narpa.dto;
 import java.util.Set;
 
 import it.rotechnology.narpa.model.Funzione;
+import it.rotechnology.narpa.model.Profilo;
 import it.rotechnology.narpa.model.Utente;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ public class UtenteDTO {
 	private String cognome;
 	private String nome;
 	private String email;
+	private Profilo profilo;
 	private Set<Funzione> funzioni;
 
 	public UtenteDTO(Utente utente) {
@@ -29,6 +31,7 @@ public class UtenteDTO {
 		this.cognome = utente.getCognome();
 		this.nome = utente.getNome();
 		this.email = utente.getEmail();
+		this.profilo = utente.getProfilo();
 		this.funzioni = utente.getFunzioni();
 	}
 

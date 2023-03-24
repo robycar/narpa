@@ -17,7 +17,7 @@ public class LoginService {
 
 
     public UtenteDTO findByUsername(String username){
-        Utente utente = utenteRepository.findByUsername(username);
+        Utente utente = utenteRepository.findByUsername(username).get();
         UtenteDTO utenteDto = new UtenteDTO();
         utenteDto.setId(utente.getId());
         utenteDto.setUsername(utente.getUsername());
