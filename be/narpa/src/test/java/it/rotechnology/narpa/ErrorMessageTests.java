@@ -2,9 +2,12 @@ package it.rotechnology.narpa;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.Locale;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.MessageSource;
 
 import it.rotechnology.narpa.exception.ApplicationException;
 import it.rotechnology.narpa.service.ProfiloService;
@@ -17,6 +20,9 @@ public class ErrorMessageTests {
 	@Autowired
 	private ProfiloService profiloService;
 	
+	@Autowired
+	private MessageSource messageSource;
+	
 	@Test
 	public void testMessages() {
 		
@@ -24,6 +30,6 @@ public class ErrorMessageTests {
 			profiloService.getProfiloById(-1L);
 		});
 		
-		log.info(exception.getMessage());
+		log.info("%s", exception.updateAndGetBody(messageSource, Locale.getDefault()));
 	}
 }

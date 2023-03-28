@@ -5,6 +5,7 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatusCode;
 
 import it.rotechnology.narpa.exception.AppError;
@@ -24,21 +25,19 @@ public class AbstractService {
 	}
 	
 	protected ApplicationException makeError(Logger logger, HttpStatusCode httpStatusCode, AppError error, Object... args) {
-		String errorCode = getMessageSource().getMessage(error.name() + ".code", null, error.name(), Locale.getDefault());
+		//String errorCode = getMessageSource().getMessage(error.name() + ".code", null, error.name(), Locale.getDefault());
 		String errorMessage = errorMessage(error, args);
 		String errorLogMessage = errorLogMessage(error, args);
 		if (logger != null) {
 			logger.error(errorLogMessage == null ? errorMessage : errorLogMessage);
 		}
 		
-		return new ApplicationException(httpStatusCode == null ? error.getDefaultStatusCode() : httpStatusCode, errorCode,
-					null, errorMessage, null);
+		return new ApplicationException(httpStatusCode, error, args, null);
 		
 	}
 
 	protected String errorMessage(AppError error, Object... args) {
-		// FIXME: Locale deve essere preso dal chiamante
-		String errorCode = getMessageSource().getMessage(error.name() + ".code", null, error.name(), Locale.getDefault());
+		String errorCode = getMessageSource().getMessage(error.name() + ".code", null, error.name(), LocaleContextHolder.getLocale());
 		String message = getMessageSource().getMessage(error.name(), args, null, Locale.getDefault());
 		if (message == null) {
 			return "[[" + errorCode + "]]";
