@@ -1,8 +1,9 @@
 package it.rotechnology.narpa.service;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class UtenteService extends AbstractService {
 
+	@Autowired
+	ProfiloService profiloService;
+	
 	@Autowired
 	FunzioneRepository funzioneRepository;
 
@@ -54,19 +58,19 @@ public class UtenteService extends AbstractService {
 		utente.setEmail(utenteDTO.getEmail());
 		utente.setPassword(utenteDTO.getPassword());
 
-		List<Funzione> funzioni = new ArrayList<>();
-		for (Funzione f : utenteDTO.getFunzioni() ) {
-			funzioni.add(this.funzioneRepository.findById(f.getCodice()).get());
+		Set<Funzione> funzioni = new HashSet<>();
+		for (String f : utenteDTO.getFunzioni() ) {
+			funzioni.add(this.funzioneRepository.findById(f).get());
 		}
-		utente.setFunzioni(utenteDTO.getFunzioni());
-		utente.setProfilo(utenteDTO.getProfilo());
+		utente.setFunzioni(funzioni);
+		utente.setProfilo(profiloService.read(utenteDTO.getProfilo().getId()));
 
-		return new UtenteDTO(this.utenteRepository.save(utente));
+		return new UtenteDTO(this.utenteRepository.save(utente), true);
 	}
 
 	//Get utente by Id
 	public UtenteDTO getUtenteById(Long id){
-		return new UtenteDTO(read(id));
+		return new UtenteDTO(read(id), true);
 	}
 
 	//Get all utenti
@@ -97,10 +101,10 @@ public class UtenteService extends AbstractService {
 		utente.setCognome(utenteDTO.getCognome());
 		utente.setEmail(utenteDTO.getEmail());
 		utente.setPassword(utenteDTO.getPassword());
-		utente.setProfilo(utenteDTO.getProfilo());
+		utente.setProfilo(profiloService.read(utenteDTO.getProfilo().getId()));
 
 		//TODO: Testing con modifica dei profili e delle funzioni, dopo aver popolato le tabelle
 
-		return new UtenteDTO(utenteRepository.saveAndFlush(utente));
+		return new UtenteDTO(utenteRepository.saveAndFlush(utente), true);
 	}
 }

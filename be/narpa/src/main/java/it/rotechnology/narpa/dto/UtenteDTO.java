@@ -1,9 +1,9 @@
 package it.rotechnology.narpa.dto;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import it.rotechnology.narpa.model.Funzione;
-import it.rotechnology.narpa.model.Profilo;
 import it.rotechnology.narpa.model.Utente;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,10 +20,10 @@ public class UtenteDTO {
 	private String cognome;
 	private String nome;
 	private String email;
-	private Profilo profilo;
-	private Set<Funzione> funzioni;
+	private ProfiloDTO profilo;
+	private Set<String> funzioni;
 
-	public UtenteDTO(Utente utente) {
+	public UtenteDTO(Utente utente, boolean includeDetails) {
 		super();
 		this.id = utente.getId();
 		this.username = utente.getUsername();
@@ -31,8 +31,16 @@ public class UtenteDTO {
 		this.cognome = utente.getCognome();
 		this.nome = utente.getNome();
 		this.email = utente.getEmail();
-		this.profilo = utente.getProfilo();
-		this.funzioni = utente.getFunzioni();
+		if(utente.getProfilo()!=null){
+			this.profilo = new ProfiloDTO(utente.getProfilo());
+		}
+		if(includeDetails){
+			this.funzioni = utente.getFunzioni().stream().map(Funzione::getCodice).collect(Collectors.toSet());
+		}
+	}
+	
+	public UtenteDTO(Utente utente){
+		this(utente, false);
 	}
 
 	public UtenteDTO(Long id) {
